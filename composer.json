@@ -16,15 +16,16 @@
     },
     {
       "type": "git",
-      "url": "https://github.com/boooklet/utils.git"
+      "url": "https://github.com/boooklet/tester.git"
     }
   ],
   "require": {
     "boooklet/tester": "dev-master"
   },
   "autoload": {
-    "classmap": [
-      "src/"
-    ]
+    "psr-4": {
+      "": "src/" ,
+      "Utils\\": "src/utils"
+    }
   }
 }
