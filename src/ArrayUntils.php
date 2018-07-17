@@ -60,4 +60,16 @@ class ArrayUntils
 
         return $output;
     }
+
+    public static function filterByAttributes($allowed_attributes, $data)
+    {
+        $allowed_data = [];
+        foreach ($data as $key => $value) {
+            if (in_array($key, $allowed_attributes)) {
+                $allowed_data[$key] = $value;
+            }
+        }
+
+        return $allowed_data;
+    }
 }

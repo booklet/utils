@@ -179,4 +179,32 @@ class StringUntils
 
         return $text;
     }
+
+    public static function searchable($string)
+    {
+        $string = strip_tags($string);
+        $normalized = StringUntils::removeAccentsAndDiacritics($string);
+        $normalized = strtolower($normalized);
+        $normalized = preg_replace('/[^a-z0-9 _-]/', '', $normalized);
+
+        return $normalized;
+    }
+
+    public static function extractEmails($string)
+    {
+        $pattern = '/[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}/';
+
+        // "piotrstarzynski@kancelariasapereaude.home.pl piotrstarzynski@kancelariasapereaude.home.pl" <piotrstarzynski@kancelariasapereaude.home.pl>
+        preg_match_all($pattern, $string, $matches);
+        $emails = array_map('strtolower', $matches[0]);
+
+        return $emails;
+    }
+
+    public static function extractUniqueEmails($string)
+    {
+        $emails = self::extractEmails($string);
+
+        return array_unique($emails);
+    }
 }

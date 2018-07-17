@@ -194,4 +194,31 @@ class StringUntilsTest extends TesterCase
         Assert::expect(StringUntils::truncate('Co to za naklejki', 20))->to_equal('Co to za naklejki');
         Assert::expect(StringUntils::truncate('Limiting or Truncating strings using PHP', 37))->to_equal('Limiting or Truncating strings using...');
     }
+
+    public function testExtractEmails()
+    {
+        $emails = StringUntils::extractEmails('"piotrstarzynski@kancelariasapereaude.home.pl piotrstarzynski@kancelariasapereaude.home.pl" <piotrstarzynski@kancelariasapereaude.home.pl>');
+
+        $expect = [
+            'piotrstarzynski@kancelariasapereaude.home.pl',
+            'piotrstarzynski@kancelariasapereaude.home.pl',
+            'piotrstarzynski@kancelariasapereaude.home.pl',
+        ];
+        Assert::expect($emails)->to_equal($expect);
+    }
+
+    public function testExtractUniqueEmails()
+    {
+        $emails = StringUntils::extractUniqueEmails('"piotrstarzynski@kancelariasapereaude.home.pl piotrstarzynski@kancelariasapereaude.home.pl" <piotrstarzynski@kancelariasapereaude.home.pl>');
+
+        $expect = [
+            'piotrstarzynski@kancelariasapereaude.home.pl',
+        ];
+        Assert::expect($emails)->to_equal($expect);
+
+        $emails = StringUntils::extractUniqueEmails('ereaude.home.pl');
+
+        $expect = [];
+        Assert::expect($emails)->to_equal($expect);
+    }
 }
