@@ -1,8 +1,6 @@
 <?php
-class CSVUntilsTest extends TesterCase
+class CSVUntilsTest extends \CustomPHPUnitTestCase
 {
-    public $skip_database_clear_before = ['all'];
-
     public function testParseCsvToArrayBooks()
     {
         $csv_array = CSVUntils::parseCsvToArray('tests/fixtures/csv/books.csv');
@@ -25,7 +23,7 @@ class CSVUntilsTest extends TesterCase
              ['4', 'The Da Vinci Code (Hardcover)', 'Dan Brown', '   Book   ', '0385504209', 'book movie danbrown bestseller davinci', ''],
         ];
 
-        Assert::expect($csv_array)->to_equal($expect_results);
+        $this->assertEquals($csv_array, $expect_results);
     }
 
     public function testParseCsvToArrayBikes()
@@ -60,7 +58,7 @@ class CSVUntilsTest extends TesterCase
             ['799', 'ANNA ', 'DUŃKO  A Rh+', '2', ''],
         ];
 
-        Assert::expect($csv_array)->to_equal($expect_results);
+        $this->assertEquals($csv_array, $expect_results);
     }
 
     public function testParseCsvToArrayKody()
@@ -78,6 +76,6 @@ class CSVUntilsTest extends TesterCase
             ['50', '10', 'S', 'Users:booklet:Desktop:kody:kody:4043738416084.pdf', 'Grs'],
         ];
 
-        Assert::expect($csv_array)->to_equal($expect_results);
+        $this->assertEquals($csv_array, $expect_results);
     }
 }

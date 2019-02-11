@@ -1,47 +1,47 @@
 <?php
-class VarUntilsTest extends TesterCase
+class VarUntilsTest extends \CustomPHPUnitTestCase
 {
     public function testIsVariableExistsAndNotEmpty()
     {
         $var = null;
-        Assert::expect(VarUntils::isVariableExistsAndNotEmpty($var))->to_equal(false);
+        $this->assertEquals(VarUntils::isVariableExistsAndNotEmpty($var), false);
 
         $var = '';
-        Assert::expect(VarUntils::isVariableExistsAndNotEmpty($var))->to_equal(false);
+        $this->assertEquals(VarUntils::isVariableExistsAndNotEmpty($var), false);
 
         $var = [];
-        Assert::expect(VarUntils::isVariableExistsAndNotEmpty($var))->to_equal(false);
+        $this->assertEquals(VarUntils::isVariableExistsAndNotEmpty($var), false);
 
         $var = 'a';
-        Assert::expect(VarUntils::isVariableExistsAndNotEmpty($var))->to_equal(true);
+        $this->assertEquals(VarUntils::isVariableExistsAndNotEmpty($var), true);
 
         // TODO decide whether it should return a true or false
         $var = 0;
-        Assert::expect(VarUntils::isVariableExistsAndNotEmpty($var))->to_equal(false);
+        $this->assertEquals(VarUntils::isVariableExistsAndNotEmpty($var), false);
 
         $var = ['a' => 1];
-        Assert::expect(VarUntils::isVariableExistsAndNotEmpty($var))->to_equal(true);
+        $this->assertEquals(VarUntils::isVariableExistsAndNotEmpty($var), true);
     }
 
     public function testIsVariableNotExistsOrEmpty()
     {
         $var = null;
-        Assert::expect(VarUntils::isVariableNotExistsOrEmpty($var))->to_equal(true);
+        $this->assertEquals(VarUntils::isVariableNotExistsOrEmpty($var), true);
 
         $var = '';
-        Assert::expect(VarUntils::isVariableNotExistsOrEmpty($var))->to_equal(true);
+        $this->assertEquals(VarUntils::isVariableNotExistsOrEmpty($var), true);
 
         $var = [];
-        Assert::expect(VarUntils::isVariableNotExistsOrEmpty($var))->to_equal(true);
+        $this->assertEquals(VarUntils::isVariableNotExistsOrEmpty($var), true);
 
         $var = 'a';
-        Assert::expect(VarUntils::isVariableNotExistsOrEmpty($var))->to_equal(false);
+        $this->assertEquals(VarUntils::isVariableNotExistsOrEmpty($var), false);
 
         // TODO decide whether it should return a true or false
         $var = 0;
-        Assert::expect(VarUntils::isVariableNotExistsOrEmpty($var))->to_equal(true);
+        $this->assertEquals(VarUntils::isVariableNotExistsOrEmpty($var), true);
 
         $var = ['a' => 1];
-        Assert::expect(VarUntils::isVariableNotExistsOrEmpty($var))->to_equal(false);
+        $this->assertEquals(VarUntils::isVariableNotExistsOrEmpty($var), false);
     }
 }

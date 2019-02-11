@@ -1,5 +1,5 @@
 <?php
-class StringUntilsTest extends TesterCase
+class StringUntilsTest extends \CustomPHPUnitTestCase
 {
     public function testFnexplodeCamelcase()
     {
@@ -12,7 +12,7 @@ class StringUntilsTest extends TesterCase
 
         foreach ($testdata as $from => $to) {
             $exploded_arr = StringUntils::explodeCamelcase($from);
-            Assert::expect($exploded_arr)->to_equal($to);
+            $this->assertEquals($exploded_arr, $to);
         }
     }
 
@@ -26,7 +26,7 @@ class StringUntilsTest extends TesterCase
 
         foreach ($testdata as $from => $to) {
             $camel_case = StringUntils::toCamelCase($from);
-            Assert::expect($camel_case)->to_equal($to);
+            $this->assertEquals($camel_case, $to);
         }
     }
 
@@ -40,35 +40,35 @@ class StringUntilsTest extends TesterCase
 
         foreach ($testdata as $from => $to) {
             $file_name = StringUntils::fileNameFormPathToClass($from);
-            Assert::expect($file_name)->to_equal($to);
+            $this->assertEquals($file_name, $to);
         }
     }
 
     public function testFnStringInclude()
     {
         $is_include = StringUntils::isInclude('my test string', 'test');
-        Assert::expect($is_include)->to_equal(true);
+        $this->assertEquals($is_include, true);
 
         $is_include = StringUntils::isInclude('my test string', 'notexist');
-        Assert::expect($is_include)->to_equal(false);
+        $this->assertEquals($is_include, false);
     }
 
     public function testIsContainsNumbers()
     {
         $is_contains_numbers = StringUntils::isContainsNumbers('no # numbers text % ]');
-        Assert::expect($is_contains_numbers)->to_equal(false);
+        $this->assertEquals($is_contains_numbers, false);
 
         $is_contains_numbers = StringUntils::isContainsNumbers('text with 123 digits');
-        Assert::expect($is_contains_numbers)->to_equal(true);
+        $this->assertEquals($is_contains_numbers, true);
     }
 
     public function testIsContainsLetters()
     {
         $is_contains_letters = StringUntils::isContainsLetters('1234 $%^ () 09');
-        Assert::expect($is_contains_letters)->to_equal(false);
+        $this->assertEquals($is_contains_letters, false);
 
         $is_contains_letters = StringUntils::isContainsLetters('123 text With letters');
-        Assert::expect($is_contains_letters)->to_equal(true);
+        $this->assertEquals($is_contains_letters, true);
     }
 
     public function testFnTransliterate()
@@ -88,20 +88,20 @@ class StringUntilsTest extends TesterCase
 
         foreach ($testdata as $from => $to) {
             $clear_text = StringUntils::transliterate($from);
-            Assert::expect($clear_text)->to_equal($to);
+            $this->assertEquals($clear_text, $to);
         }
     }
 
     public function testGenerateRandomString()
     {
         $string = StringUntils::generateRandomString(50);
-        Assert::expect(strlen($string))->to_equal(50);
+        $this->assertEquals(strlen($string), 50);
     }
 
     public function testGenerateRandomDigitsString()
     {
         $string = StringUntils::generateRandomDigitsString(10);
-        Assert::expect(preg_match_all('/[0-9]/', $string))->to_equal(10);
+        $this->assertEquals(preg_match_all('/[0-9]/', $string), 10);
     }
 
     public static function generateRandomDigitsString($length = 10)
@@ -143,56 +143,56 @@ class StringUntilsTest extends TesterCase
 
         foreach ($testdata as $camel_case => $underscore) {
             $underscored_camel_case = StringUntils::camelCaseToUnderscore($camel_case);
-            Assert::expect($underscored_camel_case)->to_equal($underscore);
+            $this->assertEquals($underscored_camel_case, $underscore);
         }
     }
 
     public function testRemoveAccentsAndDiacritics()
     {
         $normalize = StringUntils::removeAccentsAndDiacritics('Śtręët ņąmę Ćity, ńąmę Čómpąńy-ńąmę Ċõntaçt/ňamê Γεια σου κόσμε');
-        Assert::expect($normalize)->to_equal('Street name City, name Company-name Contact/name Geia sou kosme');
+        $this->assertEquals($normalize, 'Street name City, name Company-name Contact/name Geia sou kosme');
     }
 
     public function testSlug()
     {
         $normalize = StringUntils::slug('Śtręët  ņąmę Ćity ńąmę /_Čómpąńy ńąmę Ċõntaçt ňamê');
-        Assert::expect($normalize)->to_equal('street-name-city-name-company-name-contact-name');
+        $this->assertEquals($normalize, 'street-name-city-name-company-name-contact-name');
     }
 
     public function testSanitizeFileName()
     {
         $sanitize = StringUntils::sanitizeFileName('Pł\\ik $ź_pÓł\'śki/mi-"&-(Żnąk*^ąmi)_.02?.pdf');
-        Assert::expect($sanitize)->to_equal('Plik_z_pOlskimi_Znakami_.02.pdf');
+        $this->assertEquals($sanitize, 'Plik_z_pOlskimi_Znakami_.02.pdf');
     }
 
     public function testStartsWith()
     {
-        Assert::expect(StringUntils::areStartsWith('ItemsPush', 'Push'))->to_equal(false);
-        Assert::expect(StringUntils::areStartsWith('ItemsPush', 'Items'))->to_equal(true);
-        Assert::expect(StringUntils::areStartsWith('ItemsPush', 'ItemsPush'))->to_equal(true);
-        Assert::expect(StringUntils::areStartsWith('ItemsPush', 'ItemsPushPush'))->to_equal(false);
+        $this->assertEquals(StringUntils::areStartsWith('ItemsPush', 'Push'), false);
+        $this->assertEquals(StringUntils::areStartsWith('ItemsPush', 'Items'), true);
+        $this->assertEquals(StringUntils::areStartsWith('ItemsPush', 'ItemsPush'), true);
+        $this->assertEquals(StringUntils::areStartsWith('ItemsPush', 'ItemsPushPush'), false);
     }
 
     public function testEndsWith()
     {
-        Assert::expect(StringUntils::areEndsWith('ItemsPush', 'Push'))->to_equal(true);
-        Assert::expect(StringUntils::areEndsWith('ItemsPush', 'Items'))->to_equal(false);
-        Assert::expect(StringUntils::areEndsWith('ItemsPush', 'ItemsPush'))->to_equal(true);
-        Assert::expect(StringUntils::areEndsWith('ItemsPush', 'ItemsPushPush'))->to_equal(false);
+        $this->assertEquals(StringUntils::areEndsWith('ItemsPush', 'Push'), true);
+        $this->assertEquals(StringUntils::areEndsWith('ItemsPush', 'Items'), false);
+        $this->assertEquals(StringUntils::areEndsWith('ItemsPush', 'ItemsPush'), true);
+        $this->assertEquals(StringUntils::areEndsWith('ItemsPush', 'ItemsPushPush'), false);
     }
 
     public function testRemoveWordsShorterThan()
     {
-        Assert::expect(StringUntils::removeWordsShorterThan('Naklejki na słoiki'))->to_equal('Naklejki słoiki');
-        Assert::expect(StringUntils::removeWordsShorterThan('Co to za naklejki na słoiki hmm'))->to_equal('naklejki słoiki');
-        Assert::expect(StringUntils::removeWordsShorterThan('1 a aa aaa 99 aaaa aaa aaaaa aaa aa a 0'))->to_equal('aaaa aaaaa');
+        $this->assertEquals(StringUntils::removeWordsShorterThan('Naklejki na słoiki'), 'Naklejki słoiki');
+        $this->assertEquals(StringUntils::removeWordsShorterThan('Co to za naklejki na słoiki hmm'), 'naklejki słoiki');
+        $this->assertEquals(StringUntils::removeWordsShorterThan('1 a aa aaa 99 aaaa aaa aaaaa aaa aa a 0'), 'aaaa aaaaa');
     }
 
     public function testTruncate()
     {
-        Assert::expect(StringUntils::truncate('Co to za naklejki na słoiki hmm', 19, ''))->to_equal('Co to za naklejki');
-        Assert::expect(StringUntils::truncate('Co to za naklejki', 20))->to_equal('Co to za naklejki');
-        Assert::expect(StringUntils::truncate('Limiting or Truncating strings using PHP', 37))->to_equal('Limiting or Truncating strings using...');
+        $this->assertEquals(StringUntils::truncate('Co to za naklejki na słoiki hmm', 19, ''), 'Co to za naklejki');
+        $this->assertEquals(StringUntils::truncate('Co to za naklejki', 20), 'Co to za naklejki');
+        $this->assertEquals(StringUntils::truncate('Limiting or Truncating strings using PHP', 37), 'Limiting or Truncating strings using...');
     }
 
     public function testExtractEmails()
@@ -204,7 +204,7 @@ class StringUntilsTest extends TesterCase
             'piotrstarzynski@kancelariasapereaude.home.pl',
             'piotrstarzynski@kancelariasapereaude.home.pl',
         ];
-        Assert::expect($emails)->to_equal($expect);
+        $this->assertEquals($emails, $expect);
     }
 
     public function testExtractUniqueEmails()
@@ -214,11 +214,11 @@ class StringUntilsTest extends TesterCase
         $expect = [
             'piotrstarzynski@kancelariasapereaude.home.pl',
         ];
-        Assert::expect($emails)->to_equal($expect);
+        $this->assertEquals($emails, $expect);
 
         $emails = StringUntils::extractUniqueEmails('ereaude.home.pl');
 
         $expect = [];
-        Assert::expect($emails)->to_equal($expect);
+        $this->assertEquals($emails, $expect);
     }
 }

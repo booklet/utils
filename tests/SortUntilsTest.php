@@ -1,8 +1,6 @@
 <?php
-class SortUntilsTest extends TesterCase
+class SortUntilsTest extends \CustomPHPUnitTestCase
 {
-    public $skip_database_clear_before = ['all'];
-
     public function arrayData()
     {
         return [
@@ -18,11 +16,11 @@ class SortUntilsTest extends TesterCase
         $arr = SortUntils::sortAndGetMaxByAttribInAssocArray($this->arrayData(), 'attrib1');
         $expect = ['attrib1' => 4, 'attrib2' => 40, 'attrib3' => 100];
 
-        Assert::expect($arr)->to_equal($expect);
+        $this->assertEquals($arr, $expect);
 
         $arr = SortUntils::sortAndGetMaxByAttribInAssocArray($this->arrayData(), 'attrib3');
         $expect = ['attrib1' => 3, 'attrib2' => 20, 'attrib3' => 200];
 
-        Assert::expect($arr)->to_equal($expect);
+        $this->assertEquals($arr, $expect);
     }
 }

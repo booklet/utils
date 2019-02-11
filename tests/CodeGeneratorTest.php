@@ -1,46 +1,44 @@
 <?php
-class CodeGeneratorTest extends TesterCase
+class CodeGeneratorTest extends \CustomPHPUnitTestCase
 {
-    public $skip_database_clear_before = ['all'];
-
     public function testGenerate()
     {
         $code = (new CodeGenerator())->generate();
 
-        Assert::expect(strlen($code))->to_equal(8);
+        $this->assertEquals(strlen($code), 8);
     }
 
     public function testGenerateMultiple()
     {
         $codes = (new CodeGenerator())->generateMultiple(10);
 
-        Assert::expect(count($codes))->to_equal(10);
-        Assert::expect(strlen($codes[0]))->to_equal(8);
-        Assert::expect(strlen($codes[9]))->to_equal(8);
+        $this->assertEquals(count($codes), 10);
+        $this->assertEquals(strlen($codes[0]), 8);
+        $this->assertEquals(strlen($codes[9]), 8);
     }
 
     public function testGenerateWidthParams()
     {
         $params = ['lenght' => 100];
         $code = (new CodeGenerator($params))->generate();
-        Assert::expect(strlen($code))->to_equal(100);
+        $this->assertEquals(strlen($code), 100);
 
         $params = ['prefix' => 'PREFIX-'];
         $code = (new CodeGenerator($params))->generate();
-        Assert::expect(StringUntils::areStartsWith($code, 'PREFIX-'))->to_equal(true);
+        $this->assertEquals(StringUntils::areStartsWith($code, 'PREFIX-'), true);
 
         $params = ['suffix' => '-SUFFIX'];
         $code = (new CodeGenerator($params))->generate();
-        Assert::expect(StringUntils::areEndsWith($code, '-SUFFIX'))->to_equal(true);
+        $this->assertEquals(StringUntils::areEndsWith($code, '-SUFFIX'), true);
 
         $params = ['lenght' => 100, 'numbers' => true, 'letters' => false, 'symbols' => false, 'lower_and_uppercase' => false];
         $code = (new CodeGenerator($params))->generate();
-        Assert::expect(StringUntils::isContainsNumbers($code))->to_equal(true);
-        Assert::expect(StringUntils::isContainsLetters($code))->to_equal(false);
+        $this->assertEquals(StringUntils::isContainsNumbers($code), true);
+        $this->assertEquals(StringUntils::isContainsLetters($code), false);
 
         $params = ['lenght' => 100, 'numbers' => false, 'letters' => true, 'symbols' => false, 'lower_and_uppercase' => false];
         $code = (new CodeGenerator($params))->generate();
-        Assert::expect(StringUntils::isContainsNumbers($code))->to_equal(false);
-        Assert::expect(StringUntils::isContainsLetters($code))->to_equal(true);
+        $this->assertEquals(StringUntils::isContainsNumbers($code), false);
+        $this->assertEquals(StringUntils::isContainsLetters($code), true);
     }
 }

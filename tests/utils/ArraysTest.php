@@ -1,18 +1,15 @@
 <?php
 namespace Utils;
 
-
-use Assert;
-
 class ArraysTest extends \TesterCase
 {
     public function testFnisAssoc()
     {
         $is_array = Arrays::isAssoc(['item1', 'item2', 'item3']);
-        Assert::expect($is_array)->to_equal(false);
+        $this->assertEquals($is_array, false);
 
         $is_array = Arrays::isAssoc(['attr1' => 'item1', 'attr2' => 'item2', 'attr2' => 'item3']);
-        Assert::expect($is_array)->to_equal(true);
+        $this->assertEquals($is_array, true);
     }
 
     public function testNormalizeFilesArray()
@@ -68,7 +65,7 @@ class ArraysTest extends \TesterCase
         ];
 
         $normalize_array = Arrays::normalizeFilesArray($files);
-        Assert::expect($normalize_array)->to_equal($normalize_files);
+        $this->assertEquals($normalize_array, $normalize_files);
     }
 
     public function testNormalizeFilesArrayNested()
@@ -136,7 +133,7 @@ class ArraysTest extends \TesterCase
         ];
 
         $normalize_array = Arrays::normalizeFilesArray($files);
-        Assert::expect($normalize_array)->to_equal($normalize_files);
+        $this->assertEquals($normalize_array, $normalize_files);
     }
 
     public function testNormalizeFilesArrayWithCorrectArray()
@@ -185,6 +182,6 @@ class ArraysTest extends \TesterCase
         ];
 
         $normalize_array = Arrays::normalizeFilesArray($files);
-        Assert::expect($normalize_array)->to_equal($normalize_files);
+        $this->assertEquals($normalize_array, $normalize_files);
     }
 }
