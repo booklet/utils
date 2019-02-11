@@ -1,8 +1,6 @@
 <?php
 namespace Utils;
 
-use Assert;
-
 class PlatformCompatibilityTest extends \CustomPHPUnitTestCase
 {
     public function testWindowsFilePathWithSlashesFixing()
