@@ -1,7 +1,7 @@
 <?php
 namespace Utils;
 
-class ArraysTest extends \TesterCase
+class ArraysTest extends \CustomPHPUnitTestCase
 {
     public function testFnisAssoc()
     {
