@@ -32,11 +32,6 @@ class ObjectUntilsTest extends \CustomPHPUnitTestCase
         $this->assertEquals($parameters, false);
     }
 
-    public function testParameters()
-    {
-        $this->markTestSkipped();
-    }
-
     public function testMysqlParametersValuesArray()
     {
         $obj = $this->objectForTest();
