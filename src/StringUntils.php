@@ -183,7 +183,7 @@ class StringUntils
     public static function searchable($string)
     {
         $string = strip_tags($string);
-        $normalized = StringUntils::removeAccentsAndDiacritics($string);
+        $normalized = self::removeAccentsAndDiacritics($string);
         $normalized = strtolower($normalized);
         $normalized = preg_replace('/[^a-z0-9 _-]/', '', $normalized);
 
@@ -206,5 +206,31 @@ class StringUntils
         $emails = self::extractEmails($string);
 
         return array_unique($emails);
+    }
+
+    public static function removeAllCharactersThatNotInPassedArray(string $string, array $allowed_characters)
+    {
+        $string_characters = self::splitMultibyteStringToArray($string);
+        $output = '';
+
+        foreach ($string_characters as $character) {
+            if (in_array($character, $allowed_characters)) {
+                $output = $output . $character;
+            }
+        }
+
+        return $output;
+    }
+
+    public static function splitMultibyteStringToArray(string $string)
+    {
+        $characters = [];
+        $length = mb_strlen($string, 'UTF-8');
+
+        for ($i = 0; $i < $length; $i += 1) {
+            $characters[] = mb_substr($string, $i, 1, 'UTF-8');
+        }
+
+        return $characters;
     }
 }

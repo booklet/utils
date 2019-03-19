@@ -221,4 +221,23 @@ class StringUntilsTest extends \CustomPHPUnitTestCase
         $expect = [];
         $this->assertEquals($emails, $expect);
     }
+
+    public function testRemoveAllCharactersThatNotInPassedArray()
+    {
+        $allowed_characters = ['a', 'ą', 'Ą', 'b', 'B', 'ć', 'Ć', '!', '-', '2', '3', '4', "\n", "\r"];
+        $text = "aAąĄbBcCćĆdDeEęĘfFgGhHiIjJkKlLłŁ!\"#$%&'()*+,-./0123456789:;<=>?@[\]^_`{|}~\n\r";
+
+        $filtered_text = StringUntils::removeAllCharactersThatNotInPassedArray($text, $allowed_characters);
+
+        $this->assertEquals("aąĄbBćĆ!-234\n\r", $filtered_text);
+    }
+
+    public function testSplitMultibyteStringToArray()
+    {
+        $text = "aąęĘłÓźŻ*+`{~é主\r楼\n";
+
+        $filtered_text = StringUntils::splitMultibyteStringToArray($text);
+
+        $this->assertEquals(['a', 'ą', 'ę', 'Ę', 'ł', 'Ó', 'ź', 'Ż', '*', '+', '`', '{', '~', 'é', '主', "\r", '楼', "\n"], $filtered_text);
+    }
 }
