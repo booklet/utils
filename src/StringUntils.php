@@ -208,8 +208,12 @@ class StringUntils
         return array_unique($emails);
     }
 
-    public static function removeAllCharactersThatNotInPassedArray(string $string, array $allowed_characters)
+    public static function removeAllCharactersThatNotInPassedArray(string $string, $allowed_characters)
     {
+        if (is_string($allowed_characters)) {
+            $allowed_characters = self::splitMultibyteStringToArray($allowed_characters);
+        }
+
         $string_characters = self::splitMultibyteStringToArray($string);
         $output = '';
 

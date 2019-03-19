@@ -225,11 +225,18 @@ class StringUntilsTest extends \CustomPHPUnitTestCase
     public function testRemoveAllCharactersThatNotInPassedArray()
     {
         $allowed_characters = ['a', 'ą', 'Ą', 'b', 'B', 'ć', 'Ć', '!', '-', '2', '3', '4', "\n", "\r"];
-        $text = "aAąĄbBcCćĆdDeEęĘfFgGhHiIjJkKlLłŁ!\"#$%&'()*+,-./0123456789:;<=>?@[\]^_`{|}~\n\r";
+        $text = "aAąĄbBcCćĆdDeEęĘfFgGhHiIjJkKlLłŁ!\"#$%&'()*+,-./0123456789:;<=>?@[\]^_`{|\n}~\r";
 
         $filtered_text = StringUntils::removeAllCharactersThatNotInPassedArray($text, $allowed_characters);
 
         $this->assertEquals("aąĄbBćĆ!-234\n\r", $filtered_text);
+
+        $allowed_characters = "aąĄbB\r\nćĆ!-2\n34\r";
+        $text = "aAąĄbBc\r\nCćĆdDeEęĘfFgGhHiIjJkKlLłŁ!\"#$%&'()*+,-./012\n3456789:;<=>?@[\]^_`{|}~\r";
+
+        $filtered_text = StringUntils::removeAllCharactersThatNotInPassedArray($text, $allowed_characters);
+
+        $this->assertEquals("aąĄbB\r\nćĆ!-2\n34\r", $filtered_text);
     }
 
     public function testSplitMultibyteStringToArray()
